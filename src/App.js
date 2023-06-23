@@ -1,25 +1,46 @@
-import logo from './logo.svg';
+import React, { useState } from "react";
 import './App.css';
+import NavBar from './components/NavBar';
+import LogIn from './components/LogIn';
+import Products from './components/Products';
+import CartItems from './components/CartItems';
 
 function App() {
+  const [loggedIn, setLoggedIn] = useState(false);
+  const [showCart, setShowCart] = useState(false);
+  const [showMyCart, setShowMyCart] = useState(false);
+
+  const handleLogin = () => {
+    // Set loggedIn to true when login is successful
+    setLoggedIn(true);
+    
+  };
+
+  const handleShowCart = () => {
+    setShowCart(true);
+  };
+
+  const handleShowMyCart = () => {
+    setShowMyCart(true);
+  };
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <NavBar loggedIn={loggedIn} onShowMyCart={handleShowMyCart} />
+      {loggedIn ? (
+        showCart ? (
+          <CartItems />
+        ) : (
+          <Products onShowCart={handleShowCart} />
+        )
+      ) : (
+        <LogIn onLogin={handleLogin} />
+      )}
+    </>
+    
   );
+
+
 }
+
 
 export default App;
